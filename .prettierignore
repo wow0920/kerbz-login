@@ -1,0 +1,10 @@
+node_modules
+.expo
+build
+dist
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.svg
+package-lock.json
+
