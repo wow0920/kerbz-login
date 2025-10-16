@@ -11,16 +11,16 @@ import { ThemedView } from '@/components/themed-view';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
 
-const HEADER_HEIGHT = 250;
+const HEADER_HEIGHT = 150;
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
+  headerContent: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
 }>;
 
 export default function ParallaxScrollView({
   children,
-  headerImage,
+  headerContent,
   headerBackgroundColor,
 }: Props) {
   const backgroundColor = useThemeColor({}, 'background');
@@ -57,7 +57,7 @@ export default function ParallaxScrollView({
           headerAnimatedStyle,
         ]}
       >
-        {headerImage}
+        {headerContent}
       </Animated.View>
       <ThemedView className="flex-1 gap-4 p-8 overflow-hidden">{children}</ThemedView>
     </Animated.ScrollView>
