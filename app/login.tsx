@@ -104,7 +104,7 @@ export default function LoginScreen() {
           </Text>
         </View>
         {!!error && <Text className="text-center text-red-700">{error}</Text>}
-        <GlassView glassEffectStyle="regular" style={styles.glassView}>
+        <GlassView glassEffectStyle="regular" style={styles.glassView} isInteractive>
           <View className="gap-2 p-4 bg-black/5 dark:bg-white/5">
             <TextInput
               className="p-3 mb-1 border rounded-lg border-indigo-600/50 bg-black/5 dark:bg-white/5 dark:text-white dark:border-white/10"
@@ -143,12 +143,12 @@ export default function LoginScreen() {
           </View>
         </GlassView>
         <TouchableOpacity
-          className="items-center py-3 bg-indigo-600 rounded-lg"
+          className="items-center py-3 rounded-lg bg-primary"
           onPress={onSubmit}
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#fff" size={22} />
+            <ActivityIndicator color="#fff" size={24} />
           ) : (
             <Text className="text-lg font-semibold text-white">Sign In</Text>
           )}

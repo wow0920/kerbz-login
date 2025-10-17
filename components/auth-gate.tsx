@@ -1,25 +1,43 @@
 import { INACTIVITY_LOCK_TIMEOUT } from '@/constants/env';
 
 import { useSession } from '@/store/sessionSlice';
-import { Redirect, usePathname } from 'expo-router';
-import React, { useMemo, type PropsWithChildren } from 'react';
+import { useFocusEffect, usePathname, useRouter } from 'expo-router';
+import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 
 export default function AuthGate({ children }: PropsWithChildren) {
   const { lastActiveAt, token } = useSession();
   const pathname = usePathname();
+  const [isLocked, setIsLocked] = useState(false);
+  const router = useRouter();
 
-  const isLocked = useMemo(() => {
+  const checkLocked = useCallback(() => {
     if (!token || !lastActiveAt) return false;
     return Date.now() - lastActiveAt > INACTIVITY_LOCK_TIMEOUT;
   }, [token, lastActiveAt]);
 
-  if (!token && pathname !== '/login') {
-    return <Redirect href="/login" />;
-  }
+  useEffect(() => {
+    // check lock state every second: maybe set to 10 seconds or 1 minute in production
+    const interval = ['/lock', '/login'].includes(pathname)
+      ? null
+      : setInterval(() => {
+          setIsLocked(checkLocked());
+        }, 1000);
 
-  if (token && isLocked && pathname !== '/lock') {
-    return <Redirect href="/lock" />;
-  }
+    return () => {
+      if (interval !== null) {
+        clearInterval(interval);
+      }
+    };
+  }, [checkLocked, pathname]);
+
+  useFocusEffect(() => {
+    if (!token && pathname !== '/login') {
+      router.replace('/login');
+    }
+    if (token && isLocked && pathname !== '/lock') {
+      router.replace('/lock');
+    }
+  });
 
   return <>{children}</>;
 }

@@ -3,9 +3,10 @@ import { persistToken } from '@/api/client';
 import ThemedBackground from '@/components/themed-background';
 import type { AppDispatch } from '@/store';
 import { clearSession, setLastActiveNow, setUser } from '@/store/sessionSlice';
+import { GlassView } from 'expo-glass-effect';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 export default function LockScreen() {
@@ -40,37 +41,44 @@ export default function LockScreen() {
 
   return (
     <ThemedBackground>
-      <View className="items-stretch justify-center flex-1 gap-4 p-6 bg-neutral-50 dark:bg-neutral-950">
+      <View className="items-stretch justify-center flex-1 gap-4 p-6">
         <View className="items-center">
-          <Text className="mb-1 text-3xl font-extrabold text-indigo-700 dark:text-indigo-300">
-            Session Locked
-          </Text>
+          <Text className="mb-1 text-3xl font-extrabold text-primary">Session Locked</Text>
           <Text className="text-center text-gray-600 dark:text-gray-400">
             You were inactive for a while.
           </Text>
         </View>
         {!!error && <Text className="text-center text-red-700">{error}</Text>}
-        <View className="gap-3 p-4 rounded-2xl bg-white/80 dark:bg-white/10">
-          <TouchableOpacity
-            className="items-center py-3 bg-indigo-600 rounded-lg"
-            onPress={unlock}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text className="font-semibold text-white">Unlock</Text>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="items-center py-3 rounded-lg bg-indigo-50 dark:bg-white/5"
-            onPress={logout}
-            disabled={loading}
-          >
-            <Text className="font-semibold text-indigo-700 dark:text-indigo-300">Logout</Text>
-          </TouchableOpacity>
-        </View>
+        <GlassView style={styles.glassView} glassEffectStyle="clear" isInteractive>
+          <View className="gap-3 p-4 bg-black/5 dark:bg-white/5">
+            <TouchableOpacity
+              className="items-center py-3 rounded-lg bg-primary"
+              onPress={unlock}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text className="font-semibold text-white">Unlock</Text>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="items-center py-3 rounded-lg bg-indigo-50 dark:bg-white/5"
+              onPress={logout}
+              disabled={loading}
+            >
+              <Text className="font-semibold text-primary">Logout</Text>
+            </TouchableOpacity>
+          </View>
+        </GlassView>
       </View>
     </ThemedBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  glassView: {
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+});

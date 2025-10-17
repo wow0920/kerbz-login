@@ -51,7 +51,9 @@ export default function ParallaxScrollView({
           headerAnimatedStyle,
         ]}
       >
-        <GlassView style={styles.glassView}>{headerContent}</GlassView>
+        <GlassView isInteractive style={styles.glassView}>
+          {headerContent}
+        </GlassView>
       </Animated.View>
       <View className="flex-1 gap-4 p-8 overflow-hidden bg-transparent">{children}</View>
     </Animated.ScrollView>

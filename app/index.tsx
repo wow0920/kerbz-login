@@ -35,7 +35,7 @@ export default function DashboardScreen() {
                 <View className="flex-row items-center gap-2">
                   <TouchableOpacity
                     onPress={onLogout}
-                    className="px-3 py-1 rounded-full bg-white/20"
+                    className="px-3 py-1 rounded-full bg-primary dark:bg-white/20"
                     accessibilityRole="button"
                     accessibilityLabel="Log out"
                   >
@@ -45,8 +45,12 @@ export default function DashboardScreen() {
               </View>
               <View className="items-center justify-center flex-1">
                 <View className="flex-col items-center gap-2">
-                  <Text className="text-2xl font-bold text-white">Welcome back 👋</Text>
-                  <Text className="text-lg font-semibold text-white/90">{user?.full_name}</Text>
+                  <Text className="text-2xl font-bold text-primary dark:text-white">
+                    Welcome back 👋
+                  </Text>
+                  <Text className="text-lg font-semibold text-primary dark:text-white">
+                    {user?.full_name}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -55,9 +59,9 @@ export default function DashboardScreen() {
       >
         {user && (
           <View className="gap-4">
-            <GlassView style={styles.glassView} glassEffectStyle="clear">
+            <GlassView style={styles.glassView} glassEffectStyle="clear" isInteractive>
               <View className="p-4 rounded-2xl bg-black/5 dark:bg-white/5">
-                <Text className="mb-3 text-2xl font-extrabold text-center text-indigo-700 dark:text-indigo-300">
+                <Text className="mb-3 text-2xl font-extrabold text-center text-primary">
                   Your Profile
                 </Text>
                 <View className="flex-row justify-between py-2">

@@ -11,7 +11,7 @@ import AuthGate from '@/components/auth-gate';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { store, type AppDispatch } from '@/store';
 import { clearSession, setCredentials, setUser } from '@/store/sessionSlice';
-import React, { useEffect } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 
 export const unstable_settings = {
@@ -20,7 +20,7 @@ export const unstable_settings = {
 
 initializeApi(store);
 
-function Bootstrapper({ children }: { children: React.ReactNode }) {
+function Bootstrapper({ children }: PropsWithChildren) {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -63,13 +63,7 @@ export default function RootLayout() {
         <Bootstrapper>
           <ActivityTracker />
           <AuthGate>
-            <Stack
-              screenOptions={{
-                contentStyle: { backgroundColor: 'transparent' },
-                headerShown: false,
-                animation: 'slide_from_left',
-              }}
-            >
+            <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name="index" />
               <Stack.Screen name="login" />
               <Stack.Screen name="lock" />

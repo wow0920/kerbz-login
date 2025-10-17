@@ -15,5 +15,3 @@ export const setupUnauthorizedHandler = (store: AppStore) => ({
   onUnauthorized: () => store.dispatch(unauthorized() as UnknownAction),
   onLogout: () => store.dispatch(clearSession() as UnknownAction),
 });
-
-export default store;
