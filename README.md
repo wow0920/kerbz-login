@@ -10,6 +10,9 @@ Expo Router + TypeScript demo app that authenticates against the Kerbz staging A
 - Auth routing guard (`AuthGate`) and activity tracker to update `lastActiveAt`
 - Screens: `Login`, `Home` (profile), `Lock` (inactivity)
 - Inactivity lock after a timeout (default ~5 minutes). Unlock triggers `/me`.
+- Optional "Remember me" toggle to control token persistence
+- Basic form validation with clear inline messages
+- Light/Dark: Uses Tailwind `dark:` variants tied to system theme
 
 ## Setup
 

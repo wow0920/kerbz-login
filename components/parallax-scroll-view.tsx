@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -7,9 +7,8 @@ import Animated, {
   useScrollOffset,
 } from 'react-native-reanimated';
 
-import { ThemedView } from '@/components/themed-view';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { GlassView } from 'expo-glass-effect';
 
 const HEADER_HEIGHT = 150;
 
@@ -23,8 +22,7 @@ export default function ParallaxScrollView({
   headerContent,
   headerBackgroundColor,
 }: Props) {
-  const backgroundColor = useThemeColor({}, 'background');
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
   const headerAnimatedStyle = useAnimatedStyle(() => {
@@ -45,21 +43,17 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <Animated.ScrollView
-      ref={scrollRef}
-      style={{ backgroundColor, flex: 1 }}
-      scrollEventThrottle={16}
-    >
+    <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
       <Animated.View
         style={[
           styles.header,
-          { backgroundColor: headerBackgroundColor[colorScheme] },
+          // { backgroundColor: headerBackgroundColor[colorScheme] },
           headerAnimatedStyle,
         ]}
       >
-        {headerContent}
+        <GlassView style={styles.glassView}>{headerContent}</GlassView>
       </Animated.View>
-      <ThemedView className="flex-1 gap-4 p-8 overflow-hidden">{children}</ThemedView>
+      <View className="flex-1 gap-4 p-8 overflow-hidden bg-transparent">{children}</View>
     </Animated.ScrollView>
   );
 }
@@ -68,5 +62,8 @@ const styles = StyleSheet.create({
   header: {
     height: HEADER_HEIGHT,
     overflow: 'hidden',
+  },
+  glassView: {
+    flex: 1,
   },
 });

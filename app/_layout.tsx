@@ -63,10 +63,16 @@ export default function RootLayout() {
         <Bootstrapper>
           <ActivityTracker />
           <AuthGate>
-            <Stack>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="login" options={{ headerShown: false }} />
-              <Stack.Screen name="lock" options={{ headerShown: false }} />
+            <Stack
+              screenOptions={{
+                contentStyle: { backgroundColor: 'transparent' },
+                headerShown: false,
+                animation: 'slide_from_left',
+              }}
+            >
+              <Stack.Screen name="index" />
+              <Stack.Screen name="login" />
+              <Stack.Screen name="lock" />
             </Stack>
           </AuthGate>
           <StatusBar style="auto" />
