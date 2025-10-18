@@ -17,11 +17,13 @@ export default function AuthGate({ children }: PropsWithChildren) {
 
   useEffect(() => {
     // check lock state every second: maybe set to 10 seconds or 1 minute in production
-    const interval = ['/lock', '/login'].includes(pathname)
-      ? null
-      : setInterval(() => {
-          setIsLocked(checkLocked());
-        }, 1000);
+    if (['/lock', '/login'].includes(pathname)) {
+      setIsLocked(false);
+      return;
+    }
+    const interval = setInterval(() => {
+      setIsLocked(checkLocked());
+    }, 1000);
 
     return () => {
       if (interval !== null) {

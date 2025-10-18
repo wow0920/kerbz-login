@@ -2,7 +2,7 @@ import { meApi } from '@/api/auth';
 import { persistToken } from '@/api/client';
 import ThemedBackground from '@/components/themed-background';
 import type { AppDispatch } from '@/store';
-import { clearSession, setLastActiveNow, setUser } from '@/store/sessionSlice';
+import { clearSession, setUser } from '@/store/sessionSlice';
 import { GlassView } from 'expo-glass-effect';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -21,7 +21,6 @@ export default function LockScreen() {
     try {
       const me = await meApi();
       dispatch(setUser(me));
-      dispatch(setLastActiveNow());
       router.replace('/');
     } catch (e: unknown) {
       const err = e as { response?: { data?: { message?: string } }; message?: string };

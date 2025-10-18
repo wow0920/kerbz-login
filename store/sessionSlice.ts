@@ -21,11 +21,12 @@ const sessionSlice = createSlice({
       state.token = token ?? null;
       state.user = user ?? null;
       state.lastActiveAt = Date.now();
-      // persistToken(state.token)
     },
     setUser: (state, action: PayloadAction<UserInfo | null | undefined>) => {
       state.user = action.payload ?? null;
-      state.lastActiveAt = Date.now();
+      if (action.payload) {
+        state.lastActiveAt = Date.now();
+      }
     },
     setLastActiveNow: (state) => {
       state.lastActiveAt = Date.now();
